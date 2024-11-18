@@ -369,6 +369,72 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAiModelAiModel extends Struct.CollectionTypeSchema {
+  collectionName: 'ai_models';
+  info: {
+    displayName: 'AiModel';
+    pluralName: 'ai-models';
+    singularName: 'ai-model';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    aiModelName: Schema.Attribute.String;
+    avatar: Schema.Attribute.Boolean;
+    banner: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    defaultPrompt: Schema.Attribute.Text;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    isFeature: Schema.Attribute.Boolean;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ai-model.ai-model'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    style: Schema.Attribute.Boolean;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    userImageUpload: Schema.Attribute.Boolean;
+  };
+}
+
+export interface ApiUserListUserList extends Struct.CollectionTypeSchema {
+  collectionName: 'user_lists';
+  info: {
+    displayName: 'UserList';
+    pluralName: 'user-lists';
+    singularName: 'user-list';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-list.user-list'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    userCredits: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<10>;
+    userEmail: Schema.Attribute.Email & Schema.Attribute.Unique;
+    userName: Schema.Attribute.String;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -878,6 +944,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::ai-model.ai-model': ApiAiModelAiModel;
+      'api::user-list.user-list': ApiUserListUserList;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
